@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Link do WhatsApp<</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/tailwind.min.css">
+  </head>
+  <body class="bg-gray-100">
+   
+    <div class="flex flex-col justify-center items-center h-screen">
+      <h1 class="text-3xl font-bold mb-4">Gerador de Link do WhatsApp</h1>
+      <div class="mb-4">
+        <label for="phone-number" class="block font-medium">Número de telefone:</label>
+        <input type="text" id="phone-number" class="border-gray-300 rounded-md w-60 py-2 px-3">
+      </div>
+      <div class="mb-4">
+        <label for="message" class="block font-medium">Mensagem:</label>
+        <textarea id="message" class="border-gray-300 rounded-md w-60 h-20 py-2 px-3"></textarea>
+      </div>
+      <button id="generate-link" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md">Gerar Link</button>
+      <div id="result" class="mt-4"></div>
+      <button id="copy-link" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-md mt-4">Copiar Link</button>
+    </div>
+    
+    
+    <script>
+      const generateLinkButton = document.getElementById("generate-link");
+      const phoneNumberInput = document.getElementById("phone-number");
+      const messageTextarea = document.getElementById("message");
+      const resultDiv = document.getElementById("result");
+      const copyLinkButton = document.getElementById("copy-link");
+    
+      function generateLink() {
+        const phoneNumber = phoneNumberInput.value.replace(/[^\d]/g, "");
+        const message = encodeURIComponent(messageTextarea.value);
+        const link = `https://wa.me/${phoneNumber}?text=${message}`;
+        resultDiv.innerHTML = `<a href="${link}" target="_blank">${link}</a>`;
+        copyLinkButton.classList.remove("hidden");
+      }
+    
+      function copyLink() {
+        const linkElement = resultDiv.querySelector("a");
+        const link = linkElement.href;
+        navigator.clipboard.writeText(link);
+        alert("Link copiado para a área de transferência!");
+      }
+    
+      generateLinkButton.addEventListener("click", generateLink);
+      copyLinkButton.addEventListener("click", copyLink);
+    </script>
+    
+    
+
+    
+  </body>
+</html>
